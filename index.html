@@ -118,12 +118,12 @@
   </head>
   <body>
     <div class="goal-container">
-      <h2>Yearly Goal: $8000</h2>
+      <h2>Yearly Income Goal: $8000</h2>
       <div class="progress-bar-container">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <p class="goal-text">
-        <span id="currentAmount">$0</span> saved |
+        <span id="currentAmount">$0</span> EARN |
         <span id="remainingAmount">$8000</span> left
       </p>
       <button class="add-btn" id="openModalBtn">
@@ -148,7 +148,7 @@
       <h3>Add Amount</h3>
       <input type="number" id="amountInput" placeholder="Enter amount" />
       <br />
-      <button class="save-btn" id="saveBtn">Save</button>
+      <button class="save-btn" id="saveBtn">EARN</button>
       <button class="close-btn" id="closeBtn">Cancel</button>
     </div>
 
@@ -200,7 +200,7 @@
         openModal() {
           this.modal.style.display = "block";
           this.overlay.style.display = "block";
-          this.amountInput.value = ""; // Clear input
+          this.amountInput.value = "";
         }
 
         closeModal() {
