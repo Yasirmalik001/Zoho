@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
     <title>Document</title>
   </head>
   <body>
@@ -52,6 +53,232 @@
             alert(`Network error: ${error.message}`);
           }
         });
+=======
+    <title>Yearly Savings Goal</title>
+    <style>
+      @font-face {
+        font-family: wise;
+        src: url(wise.woff2);
+      }
+      body {
+        font-family: wise;
+        display: grid;
+        place-content: center;
+        height: 100dvh;
+        letter-spacing: 1px;
+        overflow: hidden;
+      }
+      .goal-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+      }
+      .progress-bar-container {
+        width: 100%;
+        height: 10px;
+        background: #ccc;
+        border-radius: 5px;
+        margin: 15px 0;
+        position: relative;
+      }
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #163300;
+        border-radius: 5px;
+        transition: width 0.3s ease-in-out;
+      }
+      .goal-text {
+        font-size: 17px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .add-btn {
+        background: #163300;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+        font-family: wise;
+        display: GRID;
+        place-content: CENTER;
+        align-items: CENTER;
+        justify-content: CENTER;
+        /* WIDTH: 100%; */
+      }
+      .add-btn:hover {
+        background: #163300;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        z-index: 1000;
+        text-align: center;
+        width: 250px;
+      }
+      .modal input {
+        width: 80%;
+        padding: 8px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+        font-family: wise;
+      }
+      .modal button {
+        margin-top: 10px;
+        padding: 6px 34px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: wise;
+      }
+      .save-btn {
+        background: #163300;
+        color: white;
+      }
+      .close-btn {
+        background: #f00;
+        color: white;
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="goal-container">
+      <h2>Yearly Goal: $8000</h2>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p class="goal-text">
+        <span id="currentAmount">$0</span> saved |
+        <span id="remainingAmount">$8000</span> left
+      </p>
+      <button class="add-btn" id="openModalBtn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-plus"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal for Adding Amount -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+      <h3>Add Amount</h3>
+      <input type="number" id="amountInput" placeholder="Enter amount" />
+      <br />
+      <button class="save-btn" id="saveBtn">Save</button>
+      <button class="close-btn" id="closeBtn">Cancel</button>
+    </div>
+
+    <script>
+      class SavingsTracker {
+        constructor(goalAmount) {
+          this.goal = goalAmount;
+          this.currentAmount =
+            parseFloat(localStorage.getItem("savedAmount")) || 0;
+
+          // Bind UI elements
+          this.progressBar = document.getElementById("progressBar");
+          this.currentAmountDisplay = document.getElementById("currentAmount");
+          this.remainingAmountDisplay =
+            document.getElementById("remainingAmount");
+
+          // Modal elements
+          this.modal = document.getElementById("modal");
+          this.overlay = document.getElementById("overlay");
+          this.amountInput = document.getElementById("amountInput");
+
+          // Buttons
+          document
+            .getElementById("openModalBtn")
+            .addEventListener("click", () => this.openModal());
+          document
+            .getElementById("overlay")
+            .addEventListener("click", () => this.closeModal());
+          document
+            .getElementById("closeBtn")
+            .addEventListener("click", () => this.closeModal());
+          document
+            .getElementById("saveBtn")
+            .addEventListener("click", () => this.addAmount());
+
+          // Load saved data
+          this.updateUI();
+        }
+
+        updateUI() {
+          let percentage = (this.currentAmount / this.goal) * 100;
+          this.progressBar.style.width = percentage + "%";
+          this.currentAmountDisplay.textContent = `$${this.currentAmount.toLocaleString()}`;
+          this.remainingAmountDisplay.textContent = `$${(
+            this.goal - this.currentAmount
+          ).toLocaleString()}`;
+        }
+
+        openModal() {
+          this.modal.style.display = "block";
+          this.overlay.style.display = "block";
+          this.amountInput.value = ""; // Clear input
+        }
+
+        closeModal() {
+          this.modal.style.display = "none";
+          this.overlay.style.display = "none";
+        }
+
+        addAmount() {
+          let amountToAdd = parseFloat(this.amountInput.value);
+
+          if (!isNaN(amountToAdd) && amountToAdd > 0) {
+            this.currentAmount += amountToAdd;
+
+            if (this.currentAmount > this.goal) {
+              this.currentAmount = this.goal; // Prevent over-saving
+            }
+
+            localStorage.setItem("savedAmount", this.currentAmount);
+            this.updateUI();
+            this.closeModal();
+          } else {
+            alert("Please enter a valid amount.");
+          }
+        }
+      }
+      const savingsTracker = new SavingsTracker(8000);
+>>>>>>> abdd216 (Initial commit)
     </script>
   </body>
 </html>
