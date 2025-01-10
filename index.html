@@ -3,57 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-    <title>Document</title>
-  </head>
-  <body>
-    <form id="zohoForm">
-      <input type="text" name="firstName" placeholder="First Name" required />
-      <input type="text" name="lastName" placeholder="Last Name" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="tel" name="phone" placeholder="Phone" required />
-      <textarea
-        name="description"
-        placeholder="Description"
-        required
-      ></textarea>
-      <button type="submit">Submit</button>
-    </form>
-    <script>
-      document
-        .getElementById("zohoForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const formData = {
-            firstName: e.target.firstName.value,
-            lastName: e.target.lastName.value,
-            email: e.target.email.value,
-            phone: e.target.phone.value,
-            description: e.target.description.value,
-          };
-
-          try {
-            const response = await fetch("https://zoho-one.vercel.app", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-              const data = await response.json();
-              alert(data.message);
-            } else {
-              const errorData = await response.text();
-              alert(`Failed to submit the form: ${errorData}`);
-            }
-          } catch (error) {
-            console.error("Error submitting the form:", error);
-            alert(`Network error: ${error.message}`);
-          }
-        });
-=======
     <title>Yearly Savings Goal</title>
     <style>
       @font-face {
@@ -204,81 +153,81 @@
     </div>
 
     <script>
-      class SavingsTracker {
-        constructor(goalAmount) {
-          this.goal = goalAmount;
-          this.currentAmount =
-            parseFloat(localStorage.getItem("savedAmount")) || 0;
+            class SavingsTracker {
+              constructor(goalAmount) {
+                this.goal = goalAmount;
+                this.currentAmount =
+                  parseFloat(localStorage.getItem("savedAmount")) || 0;
 
-          // Bind UI elements
-          this.progressBar = document.getElementById("progressBar");
-          this.currentAmountDisplay = document.getElementById("currentAmount");
-          this.remainingAmountDisplay =
-            document.getElementById("remainingAmount");
+                // Bind UI elements
+                this.progressBar = document.getElementById("progressBar");
+                this.currentAmountDisplay = document.getElementById("currentAmount");
+                this.remainingAmountDisplay =
+                  document.getElementById("remainingAmount");
 
-          // Modal elements
-          this.modal = document.getElementById("modal");
-          this.overlay = document.getElementById("overlay");
-          this.amountInput = document.getElementById("amountInput");
+                // Modal elements
+                this.modal = document.getElementById("modal");
+                this.overlay = document.getElementById("overlay");
+                this.amountInput = document.getElementById("amountInput");
 
-          // Buttons
-          document
-            .getElementById("openModalBtn")
-            .addEventListener("click", () => this.openModal());
-          document
-            .getElementById("overlay")
-            .addEventListener("click", () => this.closeModal());
-          document
-            .getElementById("closeBtn")
-            .addEventListener("click", () => this.closeModal());
-          document
-            .getElementById("saveBtn")
-            .addEventListener("click", () => this.addAmount());
+                // Buttons
+                document
+                  .getElementById("openModalBtn")
+                  .addEventListener("click", () => this.openModal());
+                document
+                  .getElementById("overlay")
+                  .addEventListener("click", () => this.closeModal());
+                document
+                  .getElementById("closeBtn")
+                  .addEventListener("click", () => this.closeModal());
+                document
+                  .getElementById("saveBtn")
+                  .addEventListener("click", () => this.addAmount());
 
-          // Load saved data
-          this.updateUI();
-        }
+                // Load saved data
+                this.updateUI();
+              }
 
-        updateUI() {
-          let percentage = (this.currentAmount / this.goal) * 100;
-          this.progressBar.style.width = percentage + "%";
-          this.currentAmountDisplay.textContent = `$${this.currentAmount.toLocaleString()}`;
-          this.remainingAmountDisplay.textContent = `$${(
-            this.goal - this.currentAmount
-          ).toLocaleString()}`;
-        }
+              updateUI() {
+                let percentage = (this.currentAmount / this.goal) * 100;
+                this.progressBar.style.width = percentage + "%";
+                this.currentAmountDisplay.textContent = `$${this.currentAmount.toLocaleString()}`;
+                this.remainingAmountDisplay.textContent = `$${(
+                  this.goal - this.currentAmount
+                ).toLocaleString()}`;
+              }
 
-        openModal() {
-          this.modal.style.display = "block";
-          this.overlay.style.display = "block";
-          this.amountInput.value = ""; // Clear input
-        }
+              openModal() {
+                this.modal.style.display = "block";
+                this.overlay.style.display = "block";
+                this.amountInput.value = ""; // Clear input
+              }
 
-        closeModal() {
-          this.modal.style.display = "none";
-          this.overlay.style.display = "none";
-        }
+              closeModal() {
+                this.modal.style.display = "none";
+                this.overlay.style.display = "none";
+              }
 
-        addAmount() {
-          let amountToAdd = parseFloat(this.amountInput.value);
+              addAmount() {
+                let amountToAdd = parseFloat(this.amountInput.value);
 
-          if (!isNaN(amountToAdd) && amountToAdd > 0) {
-            this.currentAmount += amountToAdd;
+                if (!isNaN(amountToAdd) && amountToAdd > 0) {
+                  this.currentAmount += amountToAdd;
 
-            if (this.currentAmount > this.goal) {
-              this.currentAmount = this.goal; // Prevent over-saving
+                  if (this.currentAmount > this.goal) {
+                    this.currentAmount = this.goal; // Prevent over-saving
+                  }
+
+                  localStorage.setItem("savedAmount", this.currentAmount);
+                  this.updateUI();
+                  this.closeModal();
+                } else {
+                  alert("Please enter a valid amount.");
+                }
+              }
             }
-
-            localStorage.setItem("savedAmount", this.currentAmount);
-            this.updateUI();
-            this.closeModal();
-          } else {
-            alert("Please enter a valid amount.");
-          }
-        }
-      }
-      const savingsTracker = new SavingsTracker(8000);
->>>>>>> abdd216 (Initial commit)
+            const savingsTracker = new SavingsTracker(8000);
+      >>>>>>> abdd216 (Initial commit)
     </script>
   </body>
 </html>
